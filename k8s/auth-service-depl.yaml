@@ -1,34 +1,34 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-service-depl
+  name: git-tix-auth-service-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth-service
+      app: git-tix-auth-service
   template:
     metadata:
       labels:
-        app: auth-service
+        app: git-tix-auth-service
     spec:
       containers:
-        - name: auth-service
+        - name: git-tix-auth-service
           image: diogo96/git-tix_auth-service
           resources:
             limits:
-              memory: "128Mi"
+              memory: "200Mi"
               cpu: "500m"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-service-srv
+  name: git-tix-auth-service-srv
 spec:
   selector:
-    app: auth-service
+    app: git-tix-auth-service
   ports:
-    - name: auth-service
+    - name: git-tix-auth-service
       protocol: TCP
       port: 5000
       targetPort: 5000
