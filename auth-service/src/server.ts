@@ -1,9 +1,9 @@
 import express, { json, urlencoded } from 'express';
 import morgan from 'morgan';
-import config from './config';
+import config from '@config/index';
 import cors from 'cors';
-import { userRouter } from './routes/user';
-import { errorHandler } from './middlewares/error-handler';
+import { userRouter } from '@routes/user';
+import { errorHandler } from '@middlewares/error-handler';
 
 const PORT = config.port;
 
