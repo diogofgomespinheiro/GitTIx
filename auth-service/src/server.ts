@@ -10,8 +10,8 @@ const PORT = config.port;
 export const app = express();
 
 app.use(cors());
-app.use(json());  
-app.use(urlencoded({ extended: true }))
+app.use(json());
+app.use(urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
 app.use('/api/users', userRouter);
@@ -19,6 +19,6 @@ app.use(errorHandler);
 
 export const start = () => {
   app.listen(config.port, () => {
-    console.log(`Server listening on port ${PORT}`)
+    console.log(`Server listening on port ${PORT}`);
   });
 };

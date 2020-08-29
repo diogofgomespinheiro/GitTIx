@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import { RequestValidationError } from '../errors/RequestValidationError';
 import { DatabaseConnectionError } from '../errors/DatabaseConnectionError';
@@ -6,7 +6,7 @@ import { DatabaseConnectionError } from '../errors/DatabaseConnectionError';
 class UserController {
   static async getCurrentUser(req: Request, res: Response) {
     res.send('Testing Get User');
-  };
+  }
 
   static createUser(req: Request, res: Response) {
     const errors = validationResult(req);
@@ -22,6 +22,6 @@ class UserController {
 
     res.send({});
   }
-};
+}
 
 export default UserController;
