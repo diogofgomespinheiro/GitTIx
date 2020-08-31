@@ -3,6 +3,7 @@ import 'express-async-errors';
 import morgan from 'morgan';
 import config from '@config/index';
 import cors from 'cors';
+import { Mongo } from '@utils/db';
 import { userRouter } from '@routes/user';
 import { errorHandler } from '@middlewares/error-handler';
 import { NotFoundError } from '@errors/NotFoundError';
@@ -24,7 +25,9 @@ app.all('*', async () => {
 
 app.use(errorHandler);
 
-export const start = () => {
+export const start = async () => {
+  await Mongo.connectToDb();
+
   app.listen(config.port, () => {
     console.log(`Server listening on port ${PORT}`);
   });

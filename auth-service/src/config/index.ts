@@ -5,6 +5,7 @@ const env = process.env.NODE_ENV || 'development';
 
 const baseConfig = {
   env,
+  dbUrl: '',
   isDev: env === 'development',
   isTest: env === 'testing',
   port: process.env.PORT || 5000,
