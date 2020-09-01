@@ -30,6 +30,10 @@ app.all('*', async () => {
 app.use(errorHandler);
 
 export const start = async () => {
+  if (!process.env.JWT_KEY) {
+    throw new Error('JWT_KEY not defined');
+  }
+
   await Mongo.connectToDb();
 
   app.listen(config.port, () => {
