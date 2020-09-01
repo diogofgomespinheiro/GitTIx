@@ -4,8 +4,9 @@ import { config as testingConfig } from './testing';
 const env = process.env.NODE_ENV || 'development';
 
 const baseConfig = {
-  env,
+  cookieSession: {},
   dbUrl: '',
+  env,
   isDev: env === 'development',
   isTest: env === 'testing',
   port: process.env.PORT || 5000,

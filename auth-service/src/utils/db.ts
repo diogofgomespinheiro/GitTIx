@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 export class Mongo {
   static async connectToDb(url = config.dbUrl, opts = {}) {
     try {
-      console.log(`Connection to MongoDB on ${url}`);
+      console.log(`Connecting to MongoDB on ${url}`);
       await mongoose.connect(url, {
         ...opts,
         useNewUrlParser: true,
