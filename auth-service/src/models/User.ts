@@ -16,16 +16,28 @@ interface IUserModel extends Model<IUserDoc> {
   build(attrs: IUserAttrs): IUserDoc;
 }
 
-const userSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: true,
+const userSchema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
   },
-  password: {
-    type: String,
-    required: true,
+  {
+    toJSON: {
+      transform(doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.password;
+        delete ret.__v;
+      },
+    },
   },
-});
+);
 
 userSchema.pre('save', async function (done) {
   try {
@@ -46,4 +58,4 @@ userSchema.statics.build = (attrs: IUserAttrs) => {
 
 const User = mongoose.model<IUserDoc, IUserModel>('User', userSchema);
 
-export { User };
+export { User, IUserDoc };

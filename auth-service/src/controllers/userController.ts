@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 
 import { BadRequestError } from '@errors/BadRequestError';
+import { JsonWebToken } from '@utils/jwt';
 import { RequestValidationError } from '@errors/RequestValidationError';
 import { User } from '@models/User';
 
@@ -27,6 +28,12 @@ class UserController {
 
     const user = User.build({ email, password });
     await user.save();
+
+    const userJwt = JsonWebToken.generateToken(user);
+
+    req.session = {
+      jwt: userJwt,
+    };
 
     res.status(201).json(user);
   }
