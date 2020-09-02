@@ -1,5 +1,5 @@
 import mongoose, { Model, Document } from 'mongoose';
-import { hash, genSalt } from 'bcryptjs';
+import { Bcrypt } from '@utils/bcrypt';
 import { BadRequestError } from '@errors/BadRequestError';
 
 interface IUserDoc extends Document {
@@ -42,8 +42,7 @@ const userSchema = new mongoose.Schema(
 userSchema.pre('save', async function (done) {
   try {
     if (this.isModified('password')) {
-      const salt = await genSalt(10);
-      const hashedPassword = await hash(this.get('password'), salt);
+      const hashedPassword = await Bcrypt.hashPassword(this.get('password'));
       this.set('password', hashedPassword);
     }
     done();
