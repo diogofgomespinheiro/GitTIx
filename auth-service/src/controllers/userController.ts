@@ -1,9 +1,8 @@
 import { Request, Response } from 'express';
-import { validationResult } from 'express-validator';
 
 import { BadRequestError } from '@errors/BadRequestError';
 import { JsonWebToken } from '@utils/jwt';
-import { RequestValidationError } from '@errors/RequestValidationError';
+import { Bcrypt } from '@utils/bcrypt';
 import { User } from '@models/User';
 
 class UserController {
@@ -12,12 +11,6 @@ class UserController {
   }
 
   static async createUser(req: Request, res: Response) {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      throw new RequestValidationError(errors.array());
-    }
-
     const { email, password } = req.body;
 
     const existingUser = await User.findOne({ email });
@@ -36,6 +29,33 @@ class UserController {
     };
 
     res.status(201).json(user);
+  }
+
+  static async signIn(req: Request, res: Response) {
+    const { email, password } = req.body;
+
+    const existingUser = await User.findOne({ email });
+
+    if (!existingUser) {
+      throw new BadRequestError('Invalid credentials');
+    }
+
+    const passwordsMatch = await Bcrypt.comparePasswords(
+      password,
+      existingUser.password,
+    );
+
+    if (!passwordsMatch) {
+      throw new BadRequestError('Invalid credentials');
+    }
+
+    const userJwt = JsonWebToken.generateToken(existingUser);
+
+    req.session = {
+      jwt: userJwt,
+    };
+
+    res.status(200).json(existingUser);
   }
 }
 
