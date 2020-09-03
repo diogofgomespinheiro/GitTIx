@@ -12,4 +12,8 @@ export class JsonWebToken {
       config.jwtSecret,
     );
   }
+
+  static verifyToken(currentJwt: string): Object {
+    return jwt.verify(currentJwt, config.jwtSecret);
+  }
 }
