@@ -3,10 +3,11 @@ import { body } from 'express-validator';
 
 import userController from '@controllers/userController';
 import { validateRequest } from '@middlewares/validate-request';
+import { currentUser } from '@middlewares/auth';
 
 const router = express.Router();
 
-router.get('/currentUser', userController.getCurrentUser);
+router.get('/currentUser', currentUser, userController.getCurrentUser);
 
 router.post(
   '/signup',
@@ -34,6 +35,6 @@ router.post(
   userController.signIn,
 );
 
-router.post('/signout', (req, res) => res.send('Diogo'));
+router.post('/signout', userController.signOut);
 
 export { router as userRouter };

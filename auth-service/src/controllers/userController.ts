@@ -7,7 +7,7 @@ import { User } from '@models/User';
 
 class UserController {
   static async getCurrentUser(req: Request, res: Response) {
-    res.send('Testing Get User');
+    res.json({ currentUser: req.currentUser || null });
   }
 
   static async createUser(req: Request, res: Response) {
@@ -56,6 +56,12 @@ class UserController {
     };
 
     res.status(200).json(existingUser);
+  }
+
+  static signOut(req: Request, res: Response) {
+    req.session = null;
+
+    res.send({});
   }
 }
 
