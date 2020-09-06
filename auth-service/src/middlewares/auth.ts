@@ -28,7 +28,9 @@ export const currentUser = (
   try {
     const payload = JsonWebToken.verifyToken(currentJwt) as UserPayload;
     req.currentUser = payload;
-  } catch (err) {}
+  } catch (err) {
+    throw new NotAuthorizedError();
+  }
 
   next();
 };
