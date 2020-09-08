@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: git-tix-client-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: git-tix-client
+  template:
+    metadata:
+      labels:
+        app: git-tix-client
+    spec:
+      containers:
+        - name: git-tix-client
+          image: diogo96/git-tix-client
+          resources:
+            limits:
+              memory: "200Mi"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: git-tix-client-srv
+spec:
+  selector:
+    app: git-tix-client
+  ports:
+    - name: git-tix-client
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

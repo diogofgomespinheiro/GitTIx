@@ -18,3 +18,11 @@ build:
         manual:
           - src: "src/***/*.ts"
             dest: .
+    - image: diogo96/git-tix-client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "***/*.js"
+            dest: .
