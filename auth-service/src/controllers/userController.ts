@@ -14,26 +14,22 @@ class UserController {
   static async createUser(req: Request, res: Response) {
     const { email, password } = req.body;
 
-    try {
-      const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ email });
 
-      if (existingUser) {
-        throw new BadRequestError('User already exists.');
-      }
-
-      const user = User.build({ email, password });
-      await user.save();
-
-      const userJwt = JsonWebToken.generateToken(user);
-
-      req.session = {
-        jwt: userJwt,
-      };
-
-      res.status(201).json(user);
-    } catch (err) {
-      throw new DatabaseConnectionError();
+    if (existingUser) {
+      throw new BadRequestError('User already exists.');
     }
+
+    const user = User.build({ email, password });
+    await user.save();
+
+    const userJwt = JsonWebToken.generateToken(user);
+
+    req.session = {
+      jwt: userJwt,
+    };
+
+    res.status(201).json(user);
   }
 
   static async signIn(req: Request, res: Response) {
