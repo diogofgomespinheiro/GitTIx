@@ -5,6 +5,9 @@ import axios from 'axios';
 // Component imports
 import FormInput from '../../components/FormInput';
 
+// Styles
+import { Container, FormContainer, Title } from '../../styles/pages/Signup';
+
 const SignUp = () => {
   const emailInputRef = useRef(null);
   const passwordInputRef = useRef(null);
@@ -26,24 +29,26 @@ const SignUp = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Sign Up</h1>
-      <FormInput
-        type="email"
-        name="email"
-        ref={emailInputRef}
-        label="Email"
-        required
-      />
-      <FormInput
-        type="password"
-        name="password"
-        ref={passwordInputRef}
-        label="Password"
-        required
-      />
-      <button>Sign Up</button>
-    </form>
+    <Container>
+      <FormContainer onSubmit={handleSubmit}>
+        <Title>Sign Up</Title>
+        <FormInput
+          type="email"
+          name="email"
+          ref={emailInputRef}
+          label="Email"
+          required
+        />
+        <FormInput
+          type="password"
+          name="password"
+          ref={passwordInputRef}
+          label="Password"
+          required
+        />
+        <button>Sign Up</button>
+      </FormContainer>
+    </Container>
   );
 };
 
