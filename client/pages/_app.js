@@ -1,13 +1,25 @@
+//Lirary imports
 import { ThemeProvider } from 'styled-components';
+import { ToastProvider } from 'react-toast-notifications';
 
+// Component imports
+import ToastNotification from '../components/ToastNotification';
+
+// Style imports
 import GlobalStyle from '../styles/global';
 import theme from '../styles/theme';
 
 function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
-      <Component {...pageProps} />
-      <GlobalStyle />
+      <ToastProvider
+        components={{ Toast: ToastNotification }}
+        placement="bottom-center"
+        autoDismissTimeout="5000"
+      >
+        <Component {...pageProps} />
+        <GlobalStyle />
+      </ToastProvider>
     </ThemeProvider>
   );
 }
