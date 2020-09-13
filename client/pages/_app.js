@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }) {
       <ToastProvider
         components={{ Toast: ToastNotification }}
         placement="bottom-center"
-        autoDismissTimeout="5000"
+        autoDismissTimeout="12000"
       >
         <Component {...pageProps} />
         <GlobalStyle />

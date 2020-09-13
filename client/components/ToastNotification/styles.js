@@ -21,7 +21,7 @@ export const ToastContainer = styled.div`
   color: ${({ theme: { colors } }) => colors.text};
   border-radius: 5px;
   font-weight: bold;
-  animation: ${fadeInAnimation} 2.5s, ${fadeOutAnimation} 2.5s 4s;
+  animation: ${fadeInAnimation} 2s, ${fadeOutAnimation} 2s 8s forwards;
 `;
 
 export const ToastIconContainer = styled.span`
