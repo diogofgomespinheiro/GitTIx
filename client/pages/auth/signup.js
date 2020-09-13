@@ -1,38 +1,32 @@
 // Library imports
-import { useRef, useState } from 'react';
-import { useToasts } from 'react-toast-notifications';
-import axios from 'axios';
+import { useRef } from 'react';
+import Router from 'next/router';
 
 // Component imports
 import FormInput from '../../components/FormInput';
+
+// Hooks imports
+import useRequest from '../../hooks/useRequest';
 
 // Styles
 import { Container, FormContainer, Title } from '../../styles/pages/Signup';
 
 const SignUp = () => {
-  const { addToast } = useToasts();
-
   const emailInputRef = useRef(null);
   const passwordInputRef = useRef(null);
-  const [errors, setErrors] = useState({});
+  const { doRequest } = useRequest({
+    url: '/api/users/signup',
+    method: 'post',
+    onSuccess: () => Router.push('/'),
+  });
 
   const handleSubmit = async evt => {
     evt.preventDefault();
 
-    addToast(',mnsajndkjsahdjknaskn skjadkasjd kjsad kjasdkjb ', {
-      appearance: 'warning',
-      autoDismiss: true,
-    });
-
     const email = emailInputRef.current.value;
     const password = passwordInputRef.current.value;
 
-    try {
-      //const res = await axios.post('/api/users/signup', { email, password });
-      //console.log(res.data);
-    } catch (err) {
-      //console.error(err.response.data);
-    }
+    await doRequest({ email, password });
   };
 
   return (
