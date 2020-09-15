@@ -1,14 +1,13 @@
-import buildAxios from './api/buildAxios';
+import buildClient from './api/buildClient';
 
-const Home = () => {
+const Home = ({ currentUser }) => {
   return <div>Home</div>;
 };
 
 export const getServerSideProps = async context => {
-  const { data } = await buildAxios(context).get('/api/users/currentUser');
+  const { data } = await buildClient(context).get('/api/users/currentUser');
 
-  console.log(data);
-  return { props: { data } };
+  return { props: { ...data } };
 };
 
 export default Home;

@@ -4,12 +4,16 @@ import { ToastProvider } from 'react-toast-notifications';
 
 // Component imports
 import ToastNotification from '../components/ToastNotification';
+import Header from '../components/Header';
+
+// Api imports
+import buildClient from './api/buildClient';
 
 // Style imports
 import GlobalStyle from '../styles/global';
 import theme from '../styles/theme';
 
-function MyApp({ Component, pageProps }) {
+const MyApp = ({ Component, pageProps }) => {
   return (
     <ThemeProvider theme={theme}>
       <ToastProvider
@@ -17,11 +21,19 @@ function MyApp({ Component, pageProps }) {
         placement="bottom-center"
         autoDismissTimeout="12000"
       >
+        <Header />
         <Component {...pageProps} />
         <GlobalStyle />
       </ToastProvider>
     </ThemeProvider>
   );
-}
+};
+
+MyApp.getInitialProps = async appContext => {
+  const client = buildClient(appContext.ctx);
+  const { data } = await client.get('/api/users/currentUser');
+
+  return { ...data };
+};
 
 export default MyApp;

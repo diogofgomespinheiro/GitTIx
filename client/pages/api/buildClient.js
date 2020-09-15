@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const buildAxios = ({ req }) => {
+const buildClient = ({ req }) => {
   if (typeof window === 'undefined') {
     return axios.create({
       baseURL: 'http://ingress-nginx-controller.kube-system.svc.cluster.local',
@@ -13,4 +13,4 @@ const buildAxios = ({ req }) => {
   }
 };
 
-export default buildAxios;
+export default buildClient;
