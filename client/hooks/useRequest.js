@@ -18,12 +18,14 @@ const useRequest = ({ url, method, onSuccess }) => {
         data: { errors },
       } = err.response;
 
-      errors.forEach(error =>
-        addToast(error.message, {
-          appearance: 'error',
-          autoDismiss: true,
-        }),
-      );
+      if (errors && errors.length) {
+        errors.forEach(error =>
+          addToast(error.message, {
+            appearance: 'error',
+            autoDismiss: true,
+          }),
+        );
+      }
     }
   };
 
