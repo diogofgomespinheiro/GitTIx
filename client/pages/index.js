@@ -1,7 +1,7 @@
 import buildClient from './api/buildClient';
 
 const Home = ({ currentUser }) => {
-  return <div>Home</div>;
+  return currentUser ? <div>Home</div> : <div>Your are signout</div>;
 };
 
 export const getServerSideProps = async context => {

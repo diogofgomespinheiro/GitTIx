@@ -4,7 +4,7 @@ import { useToasts } from 'react-toast-notifications';
 const useRequest = ({ url, method, onSuccess }) => {
   const { addToast } = useToasts();
 
-  const doRequest = async body => {
+  const doRequest = async (body = {}) => {
     try {
       const response = await axios[method](url, body);
 

@@ -13,7 +13,7 @@ import buildClient from './api/buildClient';
 import GlobalStyle from '../styles/global';
 import theme from '../styles/theme';
 
-const MyApp = ({ Component, pageProps }) => {
+const MyApp = ({ Component, pageProps, currentUser }) => {
   return (
     <ThemeProvider theme={theme}>
       <ToastProvider
@@ -21,7 +21,7 @@ const MyApp = ({ Component, pageProps }) => {
         placement="bottom-center"
         autoDismissTimeout="12000"
       >
-        <Header />
+        <Header currentUser={currentUser} />
         <Component {...pageProps} />
         <GlobalStyle />
       </ToastProvider>
