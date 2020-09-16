@@ -1,6 +1,6 @@
 import mongoose, { Model, Document } from 'mongoose';
 import { Bcrypt } from '@utils/bcrypt';
-import { BadRequestError } from '@errors/BadRequestError';
+import { BadRequestError } from '@diogoptickets/shared';
 
 interface IUserDoc extends Document {
   email: string;

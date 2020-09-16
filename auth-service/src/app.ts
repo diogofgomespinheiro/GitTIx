@@ -6,8 +6,7 @@ import cors from 'cors';
 import cookieSession from 'cookie-session';
 
 import { userRouter } from '@routes/user';
-import { errorHandler } from '@middlewares/error-handler';
-import { NotFoundError } from '@errors/NotFoundError';
+import { errorHandler, NotFoundError } from '@diogoptickets/shared';
 
 const app = express();
 app.set('trust proxy', true);

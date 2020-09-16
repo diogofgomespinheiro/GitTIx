@@ -2,8 +2,7 @@ import express from 'express';
 import { body } from 'express-validator';
 
 import userController from '@controllers/userController';
-import { validateRequest } from '@middlewares/validate-request';
-import { currentUser } from '@middlewares/auth';
+import { validateRequest, currentUser } from '@diogoptickets/shared';
 
 const router = express.Router();
 

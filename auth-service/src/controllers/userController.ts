@@ -1,10 +1,9 @@
 import { Request, Response } from 'express';
 
-import { BadRequestError } from '@errors/BadRequestError';
+import { BadRequestError } from '@diogoptickets/shared';
 import { JsonWebToken } from '@utils/jwt';
 import { Bcrypt } from '@utils/bcrypt';
 import { User } from '@models/User';
-import { DatabaseConnectionError } from '@errors/DatabaseConnectionError';
 
 class UserController {
   static async getCurrentUser(req: Request, res: Response) {
