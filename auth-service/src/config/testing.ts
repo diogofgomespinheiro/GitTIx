@@ -3,5 +3,4 @@ export const config = {
     signed: false,
     secure: true,
   },
-  jwtSecret: 'testing',
 };

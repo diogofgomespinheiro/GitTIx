@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 
-import { BadRequestError } from '@diogoptickets/shared';
-import { JsonWebToken } from '@utils/jwt';
+import { BadRequestError, JsonWebToken } from '@diogoptickets/shared';
 import { Bcrypt } from '@utils/bcrypt';
 import { User } from '@models/User';
 

@@ -4,5 +4,4 @@ export const config = {
     secure: true,
   },
   dbUrl: 'mongodb://auth-mongo-srv:27017/auth',
-  jwtSecret: process.env.JWT_KEY,
 };
