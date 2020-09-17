@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: git-tix-ticket-service-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: git-tix-ticket-service
+  template:
+    metadata:
+      labels:
+        app: git-tix-ticket-service
+    spec:
+      containers:
+        - name: git-tix-ticket-service
+          image: diogo96/git-tix_ticket-service
+          resources:
+            limits:
+              memory: "200Mi"
+              cpu: "500m"
+          env:
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: git-tix-ticket-service-srv
+spec:
+  selector:
+    app: git-tix-ticket-service
+  ports:
+    - name: git-tix-ticket-service
+      protocol: TCP
+      port: 5001
+      targetPort: 5001
