@@ -5,7 +5,7 @@ import { JsonWebToken } from '@diogoptickets/shared';
 declare global {
   namespace NodeJS {
     interface Global {
-      generateFakeToken(): string[];
+      generateFakeToken(userId?: string): string[];
     }
   }
 }
@@ -34,9 +34,9 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-global.generateFakeToken = () => {
+global.generateFakeToken = (userId = 'ko213opo') => {
   const payload = {
-    id: 'ko213opo',
+    id: userId,
     email: 'asd@qqew.com',
   };
 
