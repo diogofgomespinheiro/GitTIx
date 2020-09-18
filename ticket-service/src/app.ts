@@ -1,5 +1,4 @@
 import express, { json, urlencoded } from 'express';
-import 'express-async-errors';
 import morgan from 'morgan';
 import config from '@config/index';
 import cors from 'cors';
