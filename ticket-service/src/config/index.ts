@@ -10,7 +10,7 @@ const baseConfig = {
   isDev: env === 'development',
   isTest: env === 'testing',
   jwtKey: '',
-  port: process.env.PORT || 5000,
+  port: process.env.PORT || 5001,
 };
 
 let envConfig = {};
