@@ -1,6 +1,8 @@
 import nats from 'node-nats-streaming';
 import { v4 as uuidv4 } from 'uuid';
 
+import { TicketCreatedPublisher } from './events/ticketCreatedPublisher';
+
 console.clear();
 
 const stan = nats.connect('ticketing', uuidv4(), {
@@ -10,13 +12,15 @@ const stan = nats.connect('ticketing', uuidv4(), {
 stan.on('connect', () => {
   console.log('Publisher connected to NATS');
 
-  const data = JSON.stringify({
-    id: '123',
-    title: 'concert',
-    price: 20
-  });
+  const publisher = new TicketCreatedPublisher(stan);
 
-  stan.publish('ticket:created', data, () => {
-    console.log('Event published');
-  })
+  try {
+    publisher.publish({
+      id: '123',
+      title: 'title',
+      price: 20
+    });
+  } catch(err) {
+    console.error(err);
+  }
 });
