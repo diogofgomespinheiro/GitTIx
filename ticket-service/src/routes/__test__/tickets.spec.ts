@@ -1,9 +1,12 @@
-import { Ticket } from '@models/Ticket';
-import { ticketsRouter } from '@routes/tickets';
 import request from 'supertest';
 import mongoose from 'mongoose';
+import { natsWrapper } from '@utils/natsWrapper';
 
+import { Ticket } from '@models/Ticket';
+import { ticketsRouter } from '@routes/tickets';
 import { app } from '../../app';
+
+jest.mock('../../utils/natsWrapper');
 
 const createTicket = () => {
   const token = global.generateFakeToken();
@@ -103,6 +106,23 @@ describe('Tickets Router', () => {
       expect(tickets.length).toEqual(1);
       expect(tickets[0].title).toEqual('title');
       expect(tickets[0].price).toEqual(10);
+    });
+
+    it('should publish an ticket:created event', async () => {
+      let tickets = await Ticket.find({});
+      expect(tickets.length).toEqual(0);
+
+      const token = global.generateFakeToken();
+      await request(app)
+        ['post']('/api/tickets')
+        .set('Cookie', token)
+        .send({
+          title: 'title',
+          price: 10,
+        })
+        .expect(201);
+
+      expect(natsWrapper.client.publish).toHaveBeenCalled();
     });
   });
 
@@ -275,6 +295,27 @@ describe('Tickets Router', () => {
 
       expect(response.body.title).toEqual(title);
       expect(response.body.price).toEqual(price);
+    });
+
+    it('should publish an ticket:updated event', async () => {
+      const newTicketResponse = await createTicket();
+
+      const { id } = newTicketResponse.body;
+      const token = global.generateFakeToken();
+
+      const title = 'new title';
+      const price = 55;
+
+      await request(app)
+        .put(`/api/tickets/${id}`)
+        .set('Cookie', token)
+        .send({
+          title,
+          price,
+        })
+        .expect(200);
+
+      expect(natsWrapper.client.publish).toHaveBeenCalled();
     });
   });
 });

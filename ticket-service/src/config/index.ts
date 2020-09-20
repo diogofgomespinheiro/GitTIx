@@ -10,6 +10,9 @@ const baseConfig = {
   isDev: env === 'development',
   isTest: env === 'testing',
   jwtKey: '',
+  natsClientId: '',
+  natsClusterId: '',
+  natsUrl: '',
   port: process.env.PORT || 5001,
 };
 

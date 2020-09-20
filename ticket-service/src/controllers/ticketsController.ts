@@ -2,6 +2,9 @@ import { Request, Response } from 'express';
 import { NotAuthorizedError, NotFoundError } from '@diogoptickets/shared';
 
 import { Ticket } from '@models/Ticket';
+import { natsWrapper } from '@utils/natsWrapper';
+import { TicketCreatedPublisher } from '@publishers/ticketCreatedPublisher';
+import { TicketUpdatedPublisher } from '@publishers/ticketUpdatedPublisher';
 
 class TicketsController {
   static async createTicket(req: Request, res: Response) {
@@ -14,6 +17,20 @@ class TicketsController {
     });
 
     await ticket.save();
+
+    const {
+      id: savedTicketId,
+      title: savedTicketTitle,
+      price: savedTicketPrice,
+      userId,
+    } = ticket;
+
+    await new TicketCreatedPublisher(natsWrapper.client).publish({
+      id: savedTicketId,
+      title: savedTicketTitle,
+      price: savedTicketPrice,
+      userId,
+    });
 
     res.status(201).json(ticket);
   }
@@ -58,6 +75,13 @@ class TicketsController {
     });
 
     await ticket.save();
+
+    await new TicketUpdatedPublisher(natsWrapper.client).publish({
+      id,
+      title,
+      price,
+      userId,
+    });
 
     res.status(200).json(ticket);
   }
