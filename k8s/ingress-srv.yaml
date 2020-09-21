@@ -15,6 +15,14 @@ spec:
             backend:
               serviceName: git-tix-auth-service-srv
               servicePort: 5000
+          - path: /api/tickets/?(.*)
+            backend:
+              serviceName: git-tix-ticket-service-srv
+              servicePort: 5001
+          - path: /api/orders/?(.*)
+            backend:
+              serviceName: git-tix-orders-service-srv
+              servicePort: 5002
           - path: /?(.*)
             backend:
               serviceName: git-tix-client-srv
