@@ -3,7 +3,7 @@ export const config = {
     signed: false,
     secure: true,
   },
-  dbUrl: 'mongodb://ticket-mongo-srv:27017/tickets',
+  dbUrl: 'mongodb://orders-mongo-srv:27017/orders',
   jwtKey: process.env.JWT_KEY,
   natsClientId: process.env.NATS_CLIENT_ID,
   natsClusterId: process.env.NATS_CLUSTER_ID,

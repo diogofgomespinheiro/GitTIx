@@ -7,7 +7,7 @@ import { TicketCreatedPublisher } from '@publishers/ticketCreatedPublisher';
 import { TicketUpdatedPublisher } from '@publishers/ticketUpdatedPublisher';
 
 class TicketsController {
-  static async createTicket(req: Request, res: Response) {
+  static async store(req: Request, res: Response) {
     const { title, price } = req.body;
 
     const ticket = Ticket.build({
@@ -35,12 +35,12 @@ class TicketsController {
     res.status(201).json(ticket);
   }
 
-  static async getAllTickets(req: Request, res: Response) {
+  static async index(req: Request, res: Response) {
     const tickets = await Ticket.find({});
     res.json(tickets);
   }
 
-  static async findTicketById(req: Request, res: Response) {
+  static async show(req: Request, res: Response) {
     const { id } = req.params;
 
     const ticket = await Ticket.findById(id);
@@ -52,7 +52,7 @@ class TicketsController {
     res.status(200).json(ticket);
   }
 
-  static async updateTicket(req: Request, res: Response) {
+  static async update(req: Request, res: Response) {
     const { id } = req.params;
 
     const ticket = await Ticket.findById(id);

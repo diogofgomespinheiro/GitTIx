@@ -5,11 +5,11 @@ import { Bcrypt } from '@utils/bcrypt';
 import { User } from '@models/User';
 
 class UserController {
-  static async getCurrentUser(req: Request, res: Response) {
+  static async show(req: Request, res: Response) {
     res.json({ currentUser: req.currentUser || null });
   }
 
-  static async createUser(req: Request, res: Response) {
+  static async store(req: Request, res: Response) {
     const { email, password } = req.body;
 
     const existingUser = await User.findOne({ email });

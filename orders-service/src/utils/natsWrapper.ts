@@ -1,4 +1,3 @@
-import { reject } from 'lodash';
 import nats, { Stan } from 'node-nats-streaming';
 
 class NatsWrapper {

@@ -17,12 +17,12 @@ router.post(
       .withMessage('Price must be greater than 0'),
   ],
   validateRequest,
-  asynchandler(ticketsController.createTicket),
+  asynchandler(ticketsController.store),
 );
 
-router.get('', asynchandler(ticketsController.getAllTickets));
+router.get('', asynchandler(ticketsController.index));
 
-router.get('/:id', asynchandler(ticketsController.findTicketById));
+router.get('/:id', asynchandler(ticketsController.show));
 
 router.put(
   '/:id',
@@ -34,7 +34,7 @@ router.put(
       .withMessage('Price must be greater than 0'),
   ],
   validateRequest,
-  asynchandler(ticketsController.updateTicket),
+  asynchandler(ticketsController.update),
 );
 
 export { router as ticketsRouter };

@@ -6,7 +6,7 @@ import { validateRequest, currentUser } from '@diogoptickets/shared';
 
 const router = express.Router();
 
-router.get('/currentUser', currentUser, userController.getCurrentUser);
+router.get('/currentUser', currentUser, userController.show);
 
 router.post(
   '/signup',
@@ -18,7 +18,7 @@ router.post(
       .withMessage('Password must be between 4 and 20 characters.'),
   ],
   validateRequest,
-  userController.createUser,
+  userController.store,
 );
 
 router.post(
