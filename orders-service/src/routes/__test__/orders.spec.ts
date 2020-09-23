@@ -257,7 +257,28 @@ describe('Orders Router', () => {
       expect(response.body.ticket.price).toEqual(ticket.price);
     });
 
-    it.todo('emits an order created event');
+    it('should emit an order created event', async () => {
+      const ticket = await createTicket({
+        title: 'concert',
+        price: 20,
+      });
+
+      const token = global.generateFakeToken();
+
+      const ticketId = ticket.id;
+
+      const response = await request(app)
+        .post('/api/orders')
+        .set('Cookie', token)
+        .send({ ticketId })
+        .expect(201);
+
+      expect(response.body.status).toEqual(OrderStatus.Created);
+      expect(response.body.ticket.title).toEqual(ticket.title);
+      expect(response.body.ticket.price).toEqual(ticket.price);
+
+      expect(natsWrapper.client.publish).toHaveBeenCalled();
+    });
   });
 
   describe('==> DELETE /api/orders/:id', () => {
@@ -341,6 +362,35 @@ describe('Orders Router', () => {
       expect(updatedOrder?.status).toEqual(OrderStatus.Cancelled);
     });
 
-    it.todo('emits an order cancelled event');
+    it('should emit an order cancelled event', async () => {
+      const fakeTicketAttrs = {
+        title: 'concert',
+        price: 20,
+      };
+
+      const ticket = await createTicket(fakeTicketAttrs);
+
+      const fakeOrderAttrs = {
+        ticket,
+        userId: 'fakeUserId',
+        status: OrderStatus.Created,
+        expiresAt: new Date(),
+      };
+
+      const order = await createOrder(fakeOrderAttrs);
+      const token = global.generateFakeToken('fakeUserId');
+
+      await request(app)
+        .delete(`/api/orders/${order.id}`)
+        .set('Cookie', token)
+        .send()
+        .expect(204);
+
+      const updatedOrder = await Order.findById(order.id);
+
+      expect(updatedOrder?.status).toEqual(OrderStatus.Cancelled);
+
+      expect(natsWrapper.client.publish).toHaveBeenCalled();
+    });
   });
 });
