@@ -1,13 +1,16 @@
 import { Request, Response } from 'express';
-
-import { Order } from '@models/Order';
-import { Ticket } from '@models/Ticket';
 import {
   BadRequestError,
   NotAuthorizedError,
   NotFoundError,
   OrderStatus,
 } from '@diogoptickets/shared';
+
+import { Order } from '@models/Order';
+import { Ticket } from '@models/Ticket';
+import { natsWrapper } from '@utils/natsWrapper';
+import { OrderCancelledPublisher } from '@publishers/orderCancelledPublisher';
+import { OrderCreatedPublisher } from '@publishers/orderCreatedPublisher';
 
 const EXPIRATION_WINDOW_SECONDS = 15 * 60;
 
@@ -64,6 +67,19 @@ class OrdersController {
 
     await order.save();
 
+    const { id, status, userId, expiresAt } = order;
+
+    await new OrderCreatedPublisher(natsWrapper.client).publish({
+      id,
+      status,
+      userId,
+      ticket: {
+        id: ticket.id,
+        price: ticket.price,
+      },
+      expiresAt: expiresAt.toISOString(),
+    });
+
     res.status(201).json(order);
   }
 
@@ -83,6 +99,13 @@ class OrdersController {
 
     order.status = OrderStatus.Cancelled;
     await order.save();
+
+    await new OrderCancelledPublisher(natsWrapper.client).publish({
+      id,
+      ticket: {
+        id: order.ticket.id,
+      },
+    });
 
     res.status(204).json(order);
   }
