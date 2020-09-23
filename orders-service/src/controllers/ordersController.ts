@@ -4,6 +4,7 @@ import { Order } from '@models/Order';
 import { Ticket } from '@models/Ticket';
 import {
   BadRequestError,
+  NotAuthorizedError,
   NotFoundError,
   OrderStatus,
 } from '@diogoptickets/shared';
@@ -20,7 +21,20 @@ class OrdersController {
   }
 
   static async show(req: Request, res: Response) {
-    res.json({});
+    const { id } = req.params;
+    const { id: userId } = req.currentUser!;
+
+    const order = await Order.findById(id).populate('ticket');
+
+    if (!order) {
+      throw new NotFoundError();
+    }
+
+    if (order.userId !== userId) {
+      throw new NotAuthorizedError();
+    }
+
+    res.json(order);
   }
 
   static async store(req: Request, res: Response) {
@@ -54,7 +68,23 @@ class OrdersController {
   }
 
   static async destroy(req: Request, res: Response) {
-    res.json({});
+    const { id } = req.params;
+    const { id: userId } = req.currentUser!;
+
+    const order = await Order.findById(id).populate('ticket');
+
+    if (!order) {
+      throw new NotFoundError();
+    }
+
+    if (order.userId !== userId) {
+      throw new NotAuthorizedError();
+    }
+
+    order.status = OrderStatus.Cancelled;
+    await order.save();
+
+    res.status(204).json(order);
   }
 }
 

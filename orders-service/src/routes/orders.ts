@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get('', requireAuth, asynchandler(ordersController.index));
 
-router.get('/:id', asynchandler(ordersController.show));
+router.get('/:id', requireAuth, asynchandler(ordersController.show));
 
 router.post(
   '',
@@ -19,6 +19,6 @@ router.post(
   asynchandler(ordersController.store),
 );
 
-router.delete('/:id', asynchandler(ordersController.destroy));
+router.delete('/:id', requireAuth, asynchandler(ordersController.destroy));
 
 export { router as ordersRouter };

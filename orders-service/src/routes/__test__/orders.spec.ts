@@ -104,7 +104,87 @@ describe('Orders Router', () => {
     });
   });
 
-  describe('==> GET /api/orders/:id', () => {});
+  describe('==> GET /api/orders/:id', () => {
+    it('should return 401 if the user it`s not authenticated', async () => {
+      const orderId = new mongoose.Types.ObjectId();
+      await request(app).get(`/api/orders/${orderId}`).send().expect(401);
+    });
+
+    it('should return some status other than 401 if the user it`s authenticated', async () => {
+      const token = global.generateFakeToken();
+      const orderId = new mongoose.Types.ObjectId();
+      const response = await request(app)
+        .get(`/api/orders/${orderId}`)
+        .set('Cookie', token)
+        .send();
+
+      expect(response.status).not.toEqual(401);
+    });
+
+    it('should return 404 if the order does not exist', async () => {
+      const token = global.generateFakeToken();
+      const orderId = new mongoose.Types.ObjectId();
+      await request(app)
+        .get(`/api/orders/${orderId}`)
+        .set('Cookie', token)
+        .send()
+        .expect(404);
+    });
+
+    it('should return 401 if the user doesn`t own the order', async () => {
+      const fakeTicketAttrs = {
+        title: 'concert',
+        price: 20,
+      };
+
+      const ticket = await createTicket(fakeTicketAttrs);
+
+      const fakeOrderAttrs = {
+        ticket,
+        userId: 'fakeUserId',
+        status: OrderStatus.Created,
+        expiresAt: new Date(),
+      };
+
+      const order = await createOrder(fakeOrderAttrs);
+      const token = global.generateFakeToken();
+
+      await request(app)
+        .get(`/api/orders/${order.id}`)
+        .set('Cookie', token)
+        .send()
+        .expect(401);
+    });
+
+    it('should return the order with the sent id', async () => {
+      const fakeTicketAttrs = {
+        title: 'concert',
+        price: 20,
+      };
+
+      const ticket = await createTicket(fakeTicketAttrs);
+
+      const fakeOrderAttrs = {
+        ticket,
+        userId: 'fakeUserId',
+        status: OrderStatus.Created,
+        expiresAt: new Date(),
+      };
+
+      const order = await createOrder(fakeOrderAttrs);
+      const token = global.generateFakeToken('fakeUserId');
+
+      const response = await request(app)
+        .get(`/api/orders/${order.id}`)
+        .set('Cookie', token)
+        .send()
+        .expect(200);
+
+      expect(response.body.id).toEqual(order.id);
+      expect(response.body.userId).toEqual(order.userId);
+      expect(response.body.status).toEqual(order.status);
+    });
+  });
 
   describe('==> POST /api/orders', () => {
     it('should return 401 if the user it`s not authenticated', async () => {
@@ -180,5 +260,87 @@ describe('Orders Router', () => {
     it.todo('emits an order created event');
   });
 
-  describe('==> DELETE /api/orders/:id', () => {});
+  describe('==> DELETE /api/orders/:id', () => {
+    it('should return 401 if the user it`s not authenticated', async () => {
+      const orderId = new mongoose.Types.ObjectId();
+      await request(app).delete(`/api/orders/${orderId}`).send().expect(401);
+    });
+
+    it('should return some status other than 401 if the user it`s authenticated', async () => {
+      const token = global.generateFakeToken();
+      const orderId = new mongoose.Types.ObjectId();
+      const response = await request(app)
+        .delete(`/api/orders/${orderId}`)
+        .set('Cookie', token)
+        .send();
+
+      expect(response.status).not.toEqual(401);
+    });
+
+    it('should return 404 if the order does not exist', async () => {
+      const token = global.generateFakeToken();
+      const orderId = new mongoose.Types.ObjectId();
+      await request(app)
+        .delete(`/api/orders/${orderId}`)
+        .set('Cookie', token)
+        .send()
+        .expect(404);
+    });
+
+    it('should return 401 if the user doesn`t own the order', async () => {
+      const fakeTicketAttrs = {
+        title: 'concert',
+        price: 20,
+      };
+
+      const ticket = await createTicket(fakeTicketAttrs);
+
+      const fakeOrderAttrs = {
+        ticket,
+        userId: 'fakeUserId',
+        status: OrderStatus.Created,
+        expiresAt: new Date(),
+      };
+
+      const order = await createOrder(fakeOrderAttrs);
+      const token = global.generateFakeToken();
+
+      await request(app)
+        .delete(`/api/orders/${order.id}`)
+        .set('Cookie', token)
+        .send()
+        .expect(401);
+    });
+
+    it('should cancel the order with the sent id', async () => {
+      const fakeTicketAttrs = {
+        title: 'concert',
+        price: 20,
+      };
+
+      const ticket = await createTicket(fakeTicketAttrs);
+
+      const fakeOrderAttrs = {
+        ticket,
+        userId: 'fakeUserId',
+        status: OrderStatus.Created,
+        expiresAt: new Date(),
+      };
+
+      const order = await createOrder(fakeOrderAttrs);
+      const token = global.generateFakeToken('fakeUserId');
+
+      await request(app)
+        .delete(`/api/orders/${order.id}`)
+        .set('Cookie', token)
+        .send()
+        .expect(204);
+
+      const updatedOrder = await Order.findById(order.id);
+
+      expect(updatedOrder?.status).toEqual(OrderStatus.Cancelled);
+    });
+
+    it.todo('emits an order cancelled event');
+  });
 });
