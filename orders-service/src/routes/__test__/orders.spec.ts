@@ -60,16 +60,19 @@ describe('Orders Router', () => {
 
     it('should return all the orders that belong to the user', async () => {
       const ticketOne = await createTicket({
+        id: mongoose.Types.ObjectId().toHexString(),
         title: 'ticket 1',
         price: 20,
       });
 
       const ticketTwo = await createTicket({
+        id: mongoose.Types.ObjectId().toHexString(),
         title: 'ticket 2',
         price: 20,
       });
 
       const ticketThree = await createTicket({
+        id: mongoose.Types.ObjectId().toHexString(),
         title: 'ticket 3',
         price: 20,
       });
@@ -133,6 +136,7 @@ describe('Orders Router', () => {
 
     it('should return 401 if the user doesn`t own the order', async () => {
       const fakeTicketAttrs = {
+        id: mongoose.Types.ObjectId().toHexString(),
         title: 'concert',
         price: 20,
       };
@@ -158,6 +162,7 @@ describe('Orders Router', () => {
 
     it('should return the order with the sent id', async () => {
       const fakeTicketAttrs = {
+        id: mongoose.Types.ObjectId().toHexString(),
         title: 'concert',
         price: 20,
       };
@@ -214,6 +219,7 @@ describe('Orders Router', () => {
 
     it('should an error if the ticket it`s already reserved', async () => {
       const ticket = await createTicket({
+        id: mongoose.Types.ObjectId().toHexString(),
         title: 'concert',
         price: 20,
       });
@@ -238,6 +244,7 @@ describe('Orders Router', () => {
 
     it('should reserve a ticket', async () => {
       const ticket = await createTicket({
+        id: mongoose.Types.ObjectId().toHexString(),
         title: 'concert',
         price: 20,
       });
@@ -259,6 +266,7 @@ describe('Orders Router', () => {
 
     it('should emit an order created event', async () => {
       const ticket = await createTicket({
+        id: mongoose.Types.ObjectId().toHexString(),
         title: 'concert',
         price: 20,
       });
@@ -310,6 +318,7 @@ describe('Orders Router', () => {
 
     it('should return 401 if the user doesn`t own the order', async () => {
       const fakeTicketAttrs = {
+        id: mongoose.Types.ObjectId().toHexString(),
         title: 'concert',
         price: 20,
       };
@@ -335,6 +344,7 @@ describe('Orders Router', () => {
 
     it('should cancel the order with the sent id', async () => {
       const fakeTicketAttrs = {
+        id: mongoose.Types.ObjectId().toHexString(),
         title: 'concert',
         price: 20,
       };
@@ -364,6 +374,7 @@ describe('Orders Router', () => {
 
     it('should emit an order cancelled event', async () => {
       const fakeTicketAttrs = {
+        id: mongoose.Types.ObjectId().toHexString(),
         title: 'concert',
         price: 20,
       };
