@@ -9,8 +9,7 @@ import {
 import { Order } from '@models/Order';
 import { Ticket } from '@models/Ticket';
 import { natsWrapper } from '@utils/natsWrapper';
-import { OrderCancelledPublisher } from '@publishers/orderCancelledPublisher';
-import { OrderCreatedPublisher } from '@publishers/orderCreatedPublisher';
+import { OrderCreatedPublisher, OrderCancelledPublisher } from '@publishers/';
 
 const EXPIRATION_WINDOW_SECONDS = 15 * 60;
 
