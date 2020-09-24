@@ -8,10 +8,7 @@
     "rootDir": "./src",
     "removeComments": true,
     "strict": true,
-    "typeRoots": [
-      "./node_modules/@types",
-      "./src/@types"
-    ],
+    "typeRoots": ["./node_modules/@types", "./src/@types"],
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
@@ -19,13 +16,12 @@
     "paths": {
       "@config/*": ["./src/config/*"],
       "@controllers/*": ["./src/controllers/*"],
+      "@listeners/*": ["./src/events/listeners/index"],
       "@models/*": ["./src/models/*"],
-      "@publishers/*": ["./src/events/publishers/*"],
+      "@publishers/*": ["./src/events/publishers/index"],
       "@routes/*": ["./src/routes/*"],
       "@utils/*": ["./src/utils/*"]
     }
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*"]
 }
