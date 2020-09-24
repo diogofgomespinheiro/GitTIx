@@ -5,6 +5,8 @@ import { Mongo } from '@utils/db';
 import { natsWrapper } from '@utils/natsWrapper';
 import { EnvKeysChecker } from '@utils/envKeysChecker';
 
+import { TicketCreatedListener, TicketUpdatedListener } from '@listeners/';
+
 const PORT = config.port;
 
 const start = async () => {
@@ -22,6 +24,9 @@ const start = async () => {
 
   process.on('SIGINT', () => natsWrapper.client.close());
   process.on('SIGTERM', () => natsWrapper.client.close());
+
+  new TicketCreatedListener(natsWrapper.client).listen();
+  new TicketUpdatedListener(natsWrapper.client).listen();
 
   await Mongo.connectToDb();
 

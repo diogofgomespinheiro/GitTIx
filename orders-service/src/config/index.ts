@@ -13,7 +13,7 @@ const baseConfig = {
   natsClientId: '',
   natsClusterId: '',
   natsUrl: '',
-  port: process.env.PORT || 5001,
+  port: process.env.PORT || 5002,
 };
 
 let envConfig = {};

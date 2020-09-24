@@ -8,6 +8,7 @@ interface ITicketDoc extends Document {
 }
 
 interface ITicketAttrs {
+  id: string;
   title: string;
   price: number;
 }
@@ -38,8 +39,11 @@ const ticketSchema = new mongoose.Schema(
   },
 );
 
-ticketSchema.statics.build = (attrs: ITicketAttrs) => {
-  return new Ticket(attrs);
+ticketSchema.statics.build = ({ id, ...attrs }: ITicketAttrs) => {
+  return new Ticket({
+    _id: id,
+    ...attrs,
+  });
 };
 
 ticketSchema.methods.isReserved = async function () {
