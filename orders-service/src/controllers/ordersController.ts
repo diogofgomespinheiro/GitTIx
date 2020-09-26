@@ -66,7 +66,7 @@ class OrdersController {
 
     await order.save();
 
-    const { id, status, userId, expiresAt } = order;
+    const { id, status, userId, expiresAt, version } = order;
 
     await new OrderCreatedPublisher(natsWrapper.client).publish({
       id,
@@ -77,6 +77,7 @@ class OrdersController {
         price: ticket.price,
       },
       expiresAt: expiresAt.toISOString(),
+      version,
     });
 
     res.status(201).json(order);
@@ -104,6 +105,7 @@ class OrdersController {
       ticket: {
         id: order.ticket.id,
       },
+      version: order.version,
     });
 
     res.status(204).json(order);
