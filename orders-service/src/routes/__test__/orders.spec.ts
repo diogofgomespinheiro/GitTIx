@@ -7,7 +7,7 @@ import { Ticket, ITicketDoc, ITicketAttrs } from '@models/Ticket';
 import { ordersRouter } from '@routes/orders';
 import { app } from '../../app';
 
-jest.mock('../../utils/natsWrapper');
+jest.mock('@utils/natsWrapper');
 
 const createTicket = async (body: ITicketAttrs): Promise<ITicketDoc> => {
   const ticket = Ticket.build(body);
