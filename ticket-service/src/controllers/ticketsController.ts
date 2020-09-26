@@ -23,6 +23,7 @@ class TicketsController {
       title: savedTicketTitle,
       price: savedTicketPrice,
       userId,
+      version: savedTicketVersion,
     } = ticket;
 
     await new TicketCreatedPublisher(natsWrapper.client).publish({
@@ -30,6 +31,7 @@ class TicketsController {
       title: savedTicketTitle,
       price: savedTicketPrice,
       userId,
+      version: savedTicketVersion,
     });
 
     res.status(201).json(ticket);
@@ -81,6 +83,7 @@ class TicketsController {
       title,
       price,
       userId,
+      version: ticket.version,
     });
 
     res.status(200).json(ticket);
