@@ -8,7 +8,7 @@
     "build": "npm run clean && babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
     "start": "node dist/server.js",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --poll --ignore-watch node_modules --no-notify src/server.ts",
-    "test": "jest --watchAll --no-cache"
+    "test": "NODE_ENV=testing jest --watchAll --no-cache"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/diogofgomespinheiro/GitTIx#readme",
   "dependencies": {
-    "@diogoptickets/shared": "^1.0.22",
+    "@diogoptickets/shared": "1.0.24",
     "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -29,7 +29,8 @@
     "express-async-handler": "^1.1.4",
     "express-validator": "^6.6.1",
     "lodash": "^4.17.20",
-    "mongoose": "^5.10.2",
+    "mongoose": "5.10.7",
+    "mongoose-update-if-current": "^1.4.0",
     "morgan": "^1.10.0",
     "node-nats-streaming": "^0.3.2",
     "typescript": "^4.0.3"
@@ -58,7 +59,7 @@
     "jest": "^26.4.2",
     "mongodb-memory-server": "^6.8.0",
     "prettier": "^2.1.1",
-    "supertest": "^4.0.2",
+    "supertest": "5.0.0",
     "ts-jest": "^26.3.0",
     "ts-node-dev": "^1.0.0-pre.61"
   }
