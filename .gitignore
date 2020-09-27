@@ -1,1 +1,3 @@
 _shared
+dockerSetup.sh
+updateServiceSharedPackage.sh

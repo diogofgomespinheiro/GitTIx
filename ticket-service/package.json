@@ -8,7 +8,9 @@
     "build": "npm run clean && babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
     "start": "node dist/server.js",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --poll --ignore-watch node_modules --no-notify src/server.ts",
-    "test": "jest --watchAll --no-cache"
+    "test": "NODE_ENV=testing jest --watchAll --no-cache",
+    "build:image": "npm run build && docker build -t diogo96/git-tix_ticket-service .",
+    "push:image": "docker push diogo96/git-tix_ticket-service"
   },
   "repository": {
     "type": "git",
@@ -21,7 +23,7 @@
   },
   "homepage": "https://github.com/diogofgomespinheiro/GitTIx#readme",
   "dependencies": {
-    "@diogoptickets/shared": "1.0.25",
+    "@diogoptickets/shared": "1.0.26",
     "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",

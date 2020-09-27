@@ -18,6 +18,7 @@ module.exports = {
           '@config': './src/config',
           '@listeners': './src/events/listeners/index',
           '@publishers': './src/events/publishers/index',
+          '@queues': './src/queues',
           '@utils': './src/utils',
         },
       },

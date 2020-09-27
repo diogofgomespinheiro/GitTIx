@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: git-tix-expiration-service-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: git-tix-expiration-service
+  template:
+    metadata:
+      labels:
+        app: git-tix-expiration-service
+    spec:
+      containers:
+        - name: git-tix-expiration-service
+          image: diogo96/git-tix_expiration-service
+          resources:
+            limits:
+              memory: "200Mi"
+              cpu: "500m"
+          env:
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: REDIS_HOST
+              value: expiration-redis-srv
+            - name: NATS_URL
+              value: "http://nats-srv:4222"
+            - name: NATS_CLUSTER_ID
+              value: "ticketing"
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
