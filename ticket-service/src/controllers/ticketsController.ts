@@ -1,10 +1,13 @@
 import { Request, Response } from 'express';
-import { NotAuthorizedError, NotFoundError } from '@diogoptickets/shared';
+import {
+  BadRequestError,
+  NotAuthorizedError,
+  NotFoundError,
+} from '@diogoptickets/shared';
 
 import { Ticket } from '@models/Ticket';
 import { natsWrapper } from '@utils/natsWrapper';
-import { TicketCreatedPublisher } from '@publishers/ticketCreatedPublisher';
-import { TicketUpdatedPublisher } from '@publishers/ticketUpdatedPublisher';
+import { TicketCreatedPublisher, TicketUpdatedPublisher } from '@publishers/';
 
 class TicketsController {
   static async store(req: Request, res: Response) {
@@ -61,6 +64,10 @@ class TicketsController {
 
     if (!ticket) {
       throw new NotFoundError();
+    }
+
+    if (ticket.orderId) {
+      throw new BadRequestError('Cannot edit a reserved ticket');
     }
 
     const { userId } = ticket;
