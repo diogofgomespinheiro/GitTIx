@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: git-tix-payments-service-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: git-tix-payments-service
+  template:
+    metadata:
+      labels:
+        app: git-tix-payments-service
+    spec:
+      containers:
+        - name: git-tix-payments-service
+          image: diogo96/git-tix_payments-service
+          resources:
+            limits:
+              memory: "200Mi"
+              cpu: "500m"
+          env:
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NATS_URL
+              value: "http://nats-srv:4222"
+            - name: NATS_CLUSTER_ID
+              value: "ticketing"
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: git-tix-payments-service-srv
+spec:
+  selector:
+    app: git-tix-payments-service
+  ports:
+    - name: git-tix-payments-service
+      protocol: TCP
+      port: 5004
+      targetPort: 5004

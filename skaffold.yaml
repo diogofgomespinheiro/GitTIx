@@ -34,6 +34,14 @@ build:
         manual:
           - src: "dist/***/*.js"
             dest: .
+    - image: diogo96/git-tix_payments-service
+      context: payments-service
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "dist/***/*.js"
+            dest: .
     - image: diogo96/git-tix_expiration-service
       context: expiration-service
       docker:
