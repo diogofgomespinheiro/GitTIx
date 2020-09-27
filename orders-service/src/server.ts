@@ -5,7 +5,11 @@ import { Mongo } from '@utils/db';
 import { natsWrapper } from '@utils/natsWrapper';
 import { EnvKeysChecker } from '@utils/envKeysChecker';
 
-import { TicketCreatedListener, TicketUpdatedListener } from '@listeners/';
+import {
+  TicketCreatedListener,
+  TicketUpdatedListener,
+  ExpirationCompleteListener,
+} from '@listeners/';
 
 const PORT = config.port;
 
@@ -27,6 +31,7 @@ const start = async () => {
 
   new TicketCreatedListener(natsWrapper.client).listen();
   new TicketUpdatedListener(natsWrapper.client).listen();
+  new ExpirationCompleteListener(natsWrapper.client).listen();
 
   await Mongo.connectToDb();
 
