@@ -1,0 +1,68 @@
+{
+  "name": "payments-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.ts",
+  "scripts": {
+    "clean": "del ./dist/*",
+    "build": "npm run clean && babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
+    "start": "node dist/server.js",
+    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --poll --ignore-watch node_modules --no-notify src/server.ts",
+    "test": "NODE_ENV=testing jest --watchAll --no-cache",
+    "build:image": "npm run build && docker build -t diogo96/git-tix_orders-service .",
+    "push:image": "docker push diogo96/git-tix_orders-service"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diogofgomespinheiro/GitTIx.git"
+  },
+  "author": "Diogo Pinheiro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/diogofgomespinheiro/GitTIx/issues"
+  },
+  "homepage": "https://github.com/diogofgomespinheiro/GitTIx#readme",
+  "dependencies": {
+    "@diogoptickets/shared": "1.0.26",
+    "cookie-session": "^1.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
+    "express-validator": "^6.6.1",
+    "lodash": "^4.17.20",
+    "mongoose": "5.10.7",
+    "mongoose-update-if-current": "^1.4.0",
+    "morgan": "^1.10.0",
+    "node-nats-streaming": "^0.3.2",
+    "typescript": "^4.0.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.4",
+    "@babel/node": "^7.10.5",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-typescript": "^7.10.4",
+    "@types/cookie-session": "^2.0.41",
+    "@types/cors": "^2.8.7",
+    "@types/express": "^4.17.7",
+    "@types/jest": "^26.0.13",
+    "@types/lodash": "^4.14.159",
+    "@types/mongoose": "^5.7.36",
+    "@types/morgan": "^1.9.1",
+    "@types/supertest": "^2.0.10",
+    "@typescript-eslint/eslint-plugin": "^4.2.0",
+    "@typescript-eslint/parser": "^4.2.0",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "del-cli": "^3.0.1",
+    "eslint": "^7.7.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.21.2",
+    "jest": "^26.4.2",
+    "mongodb-memory-server": "^6.8.0",
+    "prettier": "^2.1.1",
+    "supertest": "5.0.0",
+    "ts-jest": "^26.3.0",
+    "ts-node-dev": "^1.0.0-pre.61"
+  }
+}
