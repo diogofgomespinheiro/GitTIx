@@ -7,6 +7,7 @@ export const config = {
     signed: false,
     secure: true,
   },
+  redisHost: process.env.REDIS_HOST,
   jwtKey: process.env.JWT_KEY || 'testing',
   natsClientId: 'abc',
   natsClusterId: 'ticketing',

@@ -5,7 +5,7 @@ const env = process.env.NODE_ENV || 'development';
 
 const baseConfig = {
   cookieSession: {},
-  dbUrl: '',
+  redisHost: '',
   env,
   isDev: env === 'development',
   isTest: env === 'testing',
