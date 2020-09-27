@@ -199,6 +199,25 @@ describe('Tickets Router', () => {
         .expect(404);
     });
 
+    it('should return 400 if the provided ticket is reserved', async () => {
+      const id = new mongoose.Types.ObjectId().toHexString();
+      const token = global.generateFakeToken();
+
+      const createdTicketResponse = await createTicket();
+
+      const foundTicket = await Ticket.findById(createdTicketResponse.body.id);
+      foundTicket?.set({ orderId: mongoose.Types.ObjectId().toHexString() });
+      await foundTicket?.save();
+      await request(app)
+        .put(`/api/tickets/${foundTicket?.id}`)
+        .set('Cookie', token)
+        .send({
+          title: 'title',
+          price: 20,
+        })
+        .expect(400);
+    });
+
     it('should return 401 if the user is not authenticated', async () => {
       const id = new mongoose.Types.ObjectId().toHexString();
 
