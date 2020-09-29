@@ -1,3 +1,4 @@
+// Component imports
 import AuthContainer from '../../components/AuthContainer';
 
 const SignIn = () => {

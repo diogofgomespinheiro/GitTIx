@@ -1,5 +1,7 @@
+// Style imports
 import { CloseButton, ToastIconContainer, ToastContainer } from './styles';
 
+// Asset imports
 import CloseButtonSvg from '../../assets/close_button.svg';
 import ErrorMessage from '../../assets/error_message.svg';
 import WarningMessage from '../../assets/warning_message.svg';

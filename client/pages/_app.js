@@ -22,7 +22,7 @@ const MyApp = ({ Component, pageProps, currentUser }) => {
         autoDismissTimeout="12000"
       >
         <Header currentUser={currentUser} />
-        <Component {...pageProps} />
+        <Component {...pageProps} currentUser={currentUser} />
         <GlobalStyle />
       </ToastProvider>
     </ThemeProvider>
@@ -33,7 +33,16 @@ MyApp.getInitialProps = async appContext => {
   const client = buildClient(appContext.ctx);
   const { data } = await client.get('/api/users/currentUser');
 
-  return { ...data };
+  let pageProps = {};
+  if (appContext.Component.getInitialProps) {
+    pageProps = await appContext.Component.getInitialProps(
+      appContext.ctx,
+      client,
+      data.currentUser,
+    );
+  }
+
+  return { pageProps, ...data };
 };
 
 export default MyApp;

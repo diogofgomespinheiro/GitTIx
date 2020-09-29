@@ -1,5 +1,8 @@
+// Library imports
 import { useEffect } from 'react';
 import Router from 'next/router';
+
+// Hooks imports
 import useRequest from '../../hooks/useRequest';
 
 const SignOut = () => {
