@@ -35,7 +35,9 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-global.generateFakeToken = (userId = 'ko213opo') => {
+global.generateFakeToken = (
+  userId = mongoose.Types.ObjectId().toHexString(),
+) => {
   const payload = {
     id: userId,
     email: 'asd@qqew.com',

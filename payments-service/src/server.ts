@@ -1,6 +1,6 @@
 import { app } from './app';
 
-import config from '@config/index';
+import config from '@config/';
 import { Mongo } from '@utils/db';
 import { natsWrapper } from '@utils/natsWrapper';
 import { EnvKeysChecker } from '@utils/envKeysChecker';

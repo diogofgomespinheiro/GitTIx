@@ -1,6 +1,7 @@
 export class EnvKeysChecker {
   static readonly keysToCheck = [
     'JWT_KEY',
+    'STRIPE_SECRET_KEY',
     'NATS_CLIENT_ID',
     'NATS_CLUSTER_ID',
     'NATS_URL',

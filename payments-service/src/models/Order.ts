@@ -1,16 +1,15 @@
 import mongoose, { Model, Document } from 'mongoose';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import { OrderStatus } from '@diogoptickets/shared';
-
-interface IOrderDoc extends Document {
+interface IOrderAttrs {
+  id: string;
   price: number;
   status: OrderStatus;
   userId: string;
   version: number;
 }
 
-interface IOrderAttrs {
-  id: string;
+interface IOrderDoc extends Document {
   price: number;
   status: OrderStatus;
   userId: string;

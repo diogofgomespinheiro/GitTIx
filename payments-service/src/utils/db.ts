@@ -1,4 +1,4 @@
-import config from '@config/index';
+import config from '@config/';
 import mongoose from 'mongoose';
 
 export class Mongo {
