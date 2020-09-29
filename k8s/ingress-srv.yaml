@@ -23,6 +23,10 @@ spec:
             backend:
               serviceName: git-tix-orders-service-srv
               servicePort: 5002
+          - path: /api/payments/?(.*)
+            backend:
+              serviceName: git-tix-payments-service-srv
+              servicePort: 5004
           - path: /?(.*)
             backend:
               serviceName: git-tix-client-srv
