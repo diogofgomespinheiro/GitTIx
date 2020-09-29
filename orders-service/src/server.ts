@@ -9,6 +9,7 @@ import {
   TicketCreatedListener,
   TicketUpdatedListener,
   ExpirationCompleteListener,
+  PaymentCreatedListener,
 } from '@listeners/';
 
 const PORT = config.port;
@@ -32,6 +33,7 @@ const start = async () => {
   new TicketCreatedListener(natsWrapper.client).listen();
   new TicketUpdatedListener(natsWrapper.client).listen();
   new ExpirationCompleteListener(natsWrapper.client).listen();
+  new PaymentCreatedListener(natsWrapper.client).listen();
 
   await Mongo.connectToDb();
 
