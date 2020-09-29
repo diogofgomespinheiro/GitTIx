@@ -10,6 +10,8 @@ const baseConfig = {
   isDev: env === 'development',
   isTest: env === 'testing',
   jwtKey: '',
+  stripeSecretKey: process.env.STRIPE_SECRET_KEY!,
+  stripeCurrency: 'eur',
   natsClientId: '',
   natsClusterId: '',
   natsUrl: '',
