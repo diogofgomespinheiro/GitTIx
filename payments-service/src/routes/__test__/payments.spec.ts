@@ -5,8 +5,11 @@ import { Order, OrderStatus } from '@models/Order';
 import { Payment } from '@models/Payment';
 import { paymentsRouter } from '@routes/payments';
 import { stripe } from '@utils/stripe';
+import { natsWrapper } from '@utils/natsWrapper';
 import { app } from '../../app';
 import config from '@config/';
+
+jest.mock('@utils/natsWrapper');
 
 describe('Orders Router', () => {
   it(`should have crud routes`, () => {
@@ -102,6 +105,7 @@ describe('Orders Router', () => {
         .set('Cookie', token)
         .send({ orderId: order.id, token: 'tok_visa' });
 
+      expect(natsWrapper.client.publish).toHaveBeenCalled();
       expect(response.status).toEqual(201);
 
       const stripeCharges = await stripe.charges.list({ limit: 50 });
