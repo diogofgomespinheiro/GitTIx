@@ -3,7 +3,7 @@ const Home = ({ currentUser }) => {
 };
 
 export const getServerSideProps = async context => {
-  return {};
+  return { props: {} };
 };
 
 export default Home;

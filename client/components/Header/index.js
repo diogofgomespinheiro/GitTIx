@@ -13,6 +13,7 @@ const Header = ({ currentUser }) => {
   const menuListLinks = [
     !currentUser && { label: 'Sign Up', href: '/auth/signup' },
     !currentUser && { label: 'Sign In', href: '/auth/signin' },
+    currentUser && { label: 'Sell Tickets', href: '/tickets/new' },
     currentUser && { label: 'Sign Out', href: '/auth/signout' },
   ]
     .filter(linkConfig => linkConfig)

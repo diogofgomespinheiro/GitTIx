@@ -9,7 +9,7 @@ import FormInput from '../../components/FormInput';
 import useRequest from '../../hooks/useRequest';
 
 // Styles
-import { Container, FormContainer, Title } from '../../styles/pages/Auth';
+import { Container, FormContainer, Title } from '../../styles/shared/forms';
 
 const AuthContainer = ({ title, buttonText, requestUrl }) => {
   const emailInputRef = useRef(null);
