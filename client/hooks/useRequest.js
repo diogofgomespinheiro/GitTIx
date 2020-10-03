@@ -9,15 +9,13 @@ const useRequest = ({ url, method, onSuccess }) => {
     try {
       const response = await axios[method](url, body);
 
-      if (onSuccess) {
+      if (onSuccess && response) {
         onSuccess(response.data);
       }
 
       return response.data;
     } catch (err) {
-      const {
-        data: { errors },
-      } = err.response;
+      const errors = err?.response?.data;
 
       if (errors && errors.length) {
         errors.forEach(error =>
@@ -26,6 +24,8 @@ const useRequest = ({ url, method, onSuccess }) => {
             autoDismiss: true,
           }),
         );
+      } else {
+        console.error(err);
       }
     }
   };

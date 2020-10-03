@@ -1,4 +1,5 @@
 //Lirary imports
+import App from 'next/app';
 import { ThemeProvider } from 'styled-components';
 import { ToastProvider } from 'react-toast-notifications';
 
@@ -41,16 +42,9 @@ MyApp.getInitialProps = async appContext => {
   checkProtectedRoutes(data.currentUser, ctx);
   checkForbiddenRoutesWithAuth(data.currentUser, ctx);
 
-  let pageProps = {};
-  if (appContext.Component.getInitialProps) {
-    pageProps = await appContext.Component.getInitialProps(
-      ctx,
-      client,
-      data.currentUser,
-    );
-  }
+  const appProps = await App.getInitialProps(appContext);
 
-  return { pageProps, ...data };
+  return { ...appProps, ...data };
 };
 
 export default MyApp;
