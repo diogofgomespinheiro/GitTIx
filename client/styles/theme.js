@@ -10,5 +10,9 @@ const theme = {
     success_message: 'rgba(71, 215, 138, 1)',
     warning_message: 'rgba(254, 188, 34, 1)',
   },
+  gradientColors: {
+    card_gradient:
+      'linear-gradient(to right, #e95c7f, #ee7540, #c2b849, #54a8cd)',
+  },
 };
 export default theme;
