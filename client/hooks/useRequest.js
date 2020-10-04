@@ -25,7 +25,10 @@ const useRequest = ({ url, method, onSuccess }) => {
           }),
         );
       } else {
-        console.error(err);
+        addToast(errors.message, {
+          appearance: 'error',
+          autoDismiss: true,
+        });
       }
     }
   };

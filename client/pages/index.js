@@ -16,7 +16,7 @@ import {
 const Home = ({ currentUser, tickets }) => {
   if (!tickets.length) {
     return (
-      <Container>
+      <Container width="90%">
         <Title>There are no tickets available!</Title>
       </Container>
     );

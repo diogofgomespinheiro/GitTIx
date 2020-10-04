@@ -19,6 +19,12 @@ spec:
             limits:
               memory: "200Mi"
               cpu: "500m"
+          env:
+            - name: NEXT_PUBLIC_STRIPE_PUBLIC_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: stripe-public-key
+                  key: STRIPE_PUBLIC_KEY
 ---
 apiVersion: v1
 kind: Service
